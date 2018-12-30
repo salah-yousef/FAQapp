@@ -1,3 +1,14 @@
-<p>
-  question works!
-</p>
+<div class="question">
+    <div class="card">
+      <div class="card-header">
+        {{question.text}} <a href="#" class="btn btn-link" (click)="question.hide =! question.hide">Show</a>
+      </div>
+      <div class="card-block" >
+        <ng-container *ngIf="!question.hide">
+            <p class="card-text">{{question.answer}}</p>
+        </ng-container>      
+      </div>
+    </div>
+    <br>
+  </div>
+  
