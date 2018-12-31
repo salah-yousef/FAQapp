@@ -9,31 +9,42 @@ export class DataService {
   questions:Question[];
 
   constructor() {
-    this.questions = [
-      {
-        text:"what is your name",
-        answer:"my name is salah",
-        hide:true
-      },
-      {
-        text:"what is your age",
-        answer:"my age is 25",
-        hide:true
-      },
-      {
-        text:"what is your job",
-        answer:"my job is frontend developer",
-        hide:true
-      },
-    ];
 
    }
 
+   //Get Questions from local storage
    getQuestions() {
+     if (localStorage.getItem('questions') === null ) {
+       this.questions = [];
+     } else {
+       this.questions = JSON.parse(localStorage.getItem('questions'));
+     }
      return this.questions;
    }
 
+   //Add Questions to local storage
    addQuestion(question) {
      this.questions.unshift(question);
+
+     let questions;
+
+     if (localStorage.getItem('questions') === null ) {
+      questions = [];
+      questions.unshift(question);
+      localStorage.setItem('questions', JSON.stringify(questions));
+    } else {
+      questions = JSON.parse(localStorage.getItem('questions'));
+      questions.unshift(question);
+      localStorage.setItem('questions' ,JSON.stringify(questions));
+    }
+   }
+
+   removeQuestion(question:Question) {
+     for (let i = 0; i < this.questions.length; i++) {
+       if (question == this.questions[i]) {
+          this.questions.splice(i, 1); 
+          localStorage.setItem('questions' ,JSON.stringify(this.questions));
+       }
+     }
    }
 }
